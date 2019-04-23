@@ -5,6 +5,12 @@ import { filterByAttr, searchHeroByName } from '../service/utils';
 import { getHeroStats } from '../service/api';
 import Heroes from '../components/Heroes';
 
+const ATTRIBUTES = {
+  strength: 'str',
+  intelligence: 'int',
+  agility: 'agi'
+};
+
 const Page = styled.div`
   margin-top: 1rem;
 `;
@@ -45,29 +51,22 @@ class MainPage extends Component {
     this.setState({ searchedHeroId });
   };
 
+  renderHeroes = (heroes, attrs, searchId) => {
+    const skills = Object.keys(attrs);
+    return skills.map(skill => (
+      <HeroesWrapper key={skill}>
+        <h3>{skill.toUpperCase()}</h3>
+        <Heroes heroes={filterByAttr(heroes, attrs[skill])} searchedHeroId={searchId} />
+      </HeroesWrapper>
+    ));
+  };
+
   render() {
     const { heroes, searchedHeroId } = this.state;
-    const strengthHeroes = filterByAttr(heroes, 'str');
-    const intelligenceHeroes = filterByAttr(heroes, 'int');
-    const agilityHeroes = filterByAttr(heroes, 'agi');
     return (
       <Page>
         <Search searchHero={this.searchHero} />
-        <Container>
-          {/* Ммм... бойлерплейт-код. Можно еще улучшить. HOC например */}
-          <HeroesWrapper>
-            <h3>STRENGTH</h3>
-            <Heroes heroes={strengthHeroes} searchedHeroId={searchedHeroId} />
-          </HeroesWrapper>
-          <HeroesWrapper>
-            <h3>INTELLIGENCE</h3>
-            <Heroes heroes={intelligenceHeroes} searchedHeroId={searchedHeroId} />
-          </HeroesWrapper>
-          <HeroesWrapper>
-            <h3>AGILITY</h3>
-            <Heroes heroes={agilityHeroes} searchedHeroId={searchedHeroId} />
-          </HeroesWrapper>
-        </Container>
+        <Container>{this.renderHeroes(heroes, ATTRIBUTES, searchedHeroId)}</Container>
       </Page>
     );
   }
