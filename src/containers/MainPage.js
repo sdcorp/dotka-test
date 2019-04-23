@@ -5,11 +5,7 @@ import { filterByAttr, searchHeroByName } from '../service/utils';
 import { getHeroStats } from '../service/api';
 import Heroes from '../components/Heroes';
 
-const ATTRIBUTES = {
-  strength: 'str',
-  intelligence: 'int',
-  agility: 'agi'
-};
+const ATTRIBUTES = ['strength', 'intelligence', 'agility'];
 
 const Page = styled.div`
   margin-top: 1rem;
@@ -52,11 +48,10 @@ class MainPage extends Component {
   };
 
   renderHeroes = (heroes, attrs, searchId) => {
-    const skills = Object.keys(attrs);
-    return skills.map(skill => (
-      <HeroesWrapper key={skill}>
-        <h3>{skill.toUpperCase()}</h3>
-        <Heroes heroes={filterByAttr(heroes, attrs[skill])} searchedHeroId={searchId} />
+    return attrs.map(attr => (
+      <HeroesWrapper key={attr}>
+        <h3>{attr.toUpperCase()}</h3>
+        <Heroes heroes={filterByAttr(heroes, attr.substring(0, 3))} searchedHeroId={searchId} />
       </HeroesWrapper>
     ));
   };
