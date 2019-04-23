@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import MainPage from './containers/MainPage';
-import HeroDetails from './components/HeroDetails';
+// import HeroDetails from './components/HeroDetails';
 import logo from './assets/logo.jpeg';
 
 const Logo = styled.div`
@@ -18,6 +18,8 @@ const Logo = styled.div`
   }
 `;
 
+const HeroDetails = lazy(() => import('./components/HeroDetails'));
+
 const App = () => (
   <Router>
     <Logo>
@@ -26,8 +28,10 @@ const App = () => (
       </Link>
       <span>Drink Vodka, Play Dotka!</span>
     </Logo>
-    <Route path="/" exact component={MainPage} />
-    <Route path="/:heroname" component={HeroDetails} />
+    <Suspense fallback={<div>Loading...</div>}>
+      <Route path="/" exact component={MainPage} />
+      <Route path="/:heroname" component={HeroDetails} />
+    </Suspense>
   </Router>
 );
 
