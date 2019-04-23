@@ -4,6 +4,7 @@ import Search from '../components/Search';
 import { filterByAttr, searchHeroByName } from '../service/utils';
 import { getHeroStats } from '../service/api';
 import Heroes from '../components/Heroes';
+import LoadIndicator from '../components/LoadIndicator';
 
 const ATTRIBUTES = ['strength', 'intelligence', 'agility'];
 
@@ -51,7 +52,11 @@ class MainPage extends Component {
     return attrs.map(attr => (
       <HeroesWrapper key={attr}>
         <h3>{attr.toUpperCase()}</h3>
-        <Heroes heroes={filterByAttr(heroes, attr.substring(0, 3))} searchedHeroId={searchId} />
+        {loading ? (
+          <LoadIndicator color="aquamarine" />
+        ) : (
+          <Heroes heroes={filterByAttr(heroes, attr.substring(0, 3))} searchedHeroId={searchId} />
+        )}
       </HeroesWrapper>
     ));
   };

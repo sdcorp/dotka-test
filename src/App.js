@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import MainPage from './containers/MainPage';
 // import HeroDetails from './components/HeroDetails';
 import logo from './assets/logo.jpeg';
+import LoadIndicator from './components/LoadIndicator';
 
 const Logo = styled.div`
   display: flex;
@@ -28,7 +29,8 @@ const App = () => (
       </Link>
       <span>Drink Vodka, Play Dotka!</span>
     </Logo>
-    <Suspense fallback={<div>Loading...</div>}>
+
+    <Suspense fallback={<LoadIndicator size="100px" color="crimson" />}>
       <Route path="/" exact component={MainPage} />
       <Route path="/:heroname" component={HeroDetails} />
     </Suspense>
