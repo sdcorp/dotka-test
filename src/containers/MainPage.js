@@ -4,6 +4,7 @@ import Search from '../components/Search';
 import { filterByAttr, searchHeroByName } from '../service/utils';
 import { getHeroStats } from '../service/api';
 import Heroes from '../components/Heroes';
+import LoadIndicator from '../components/LoadIndicator';
 
 const ATTRIBUTES = ['strength', 'intelligence', 'agility'];
 
@@ -32,12 +33,14 @@ const HeroesWrapper = styled.div`
 class MainPage extends Component {
   state = {
     heroes: [],
-    searchedHeroId: null
+    searchedHeroId: null,
+    loading: false
   };
 
   async componentDidMount() {
+    this.setState({ loading: true });
     const heroesData = await getHeroStats();
-    this.setState({ heroes: heroesData });
+    this.setState({ heroes: heroesData, loading: false });
   }
 
   searchHero = term => {
@@ -51,7 +54,11 @@ class MainPage extends Component {
     return attrs.map(attr => (
       <HeroesWrapper key={attr}>
         <h3>{attr.toUpperCase()}</h3>
-        <Heroes heroes={filterByAttr(heroes, attr.substring(0, 3))} searchedHeroId={searchId} />
+        {this.state.loading ? (
+          <LoadIndicator color="aquamarine" />
+        ) : (
+          <Heroes heroes={filterByAttr(heroes, attr.substring(0, 3))} searchedHeroId={searchId} />
+        )}
       </HeroesWrapper>
     ));
   };
