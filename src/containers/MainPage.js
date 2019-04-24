@@ -33,12 +33,14 @@ const HeroesWrapper = styled.div`
 class MainPage extends Component {
   state = {
     heroes: [],
-    searchedHeroId: null
+    searchedHeroId: null,
+    loading: false
   };
 
   async componentDidMount() {
+    this.setState({ loading: true });
     const heroesData = await getHeroStats();
-    this.setState({ heroes: heroesData });
+    this.setState({ heroes: heroesData, loading: false });
   }
 
   searchHero = term => {
@@ -52,7 +54,7 @@ class MainPage extends Component {
     return attrs.map(attr => (
       <HeroesWrapper key={attr}>
         <h3>{attr.toUpperCase()}</h3>
-        {loading ? (
+        {this.state.loading ? (
           <LoadIndicator color="aquamarine" />
         ) : (
           <Heroes heroes={filterByAttr(heroes, attr.substring(0, 3))} searchedHeroId={searchId} />
