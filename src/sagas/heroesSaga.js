@@ -13,7 +13,7 @@ function* fetchAllHeroesWorker() {
   try {
     yield console.log('Start Fetching!');
     yield put(actions.requestAllHeroes());
-    const heroes = yield call(() => getHeroStats());
+    const heroes = yield call(getHeroStats);
     yield console.log('Fetched!', heroes);
     yield put(actions.requestAllHeroesSuccess(heroes));
   } catch (err) {
