@@ -1,8 +1,41 @@
 import React from 'react';
 import styled from 'styled-components';
 
+const baseURL = 'https://api.opendota.com';
+
 const Details = styled.div`
   background-color: azure;
+  padding: 1rem;
+`;
+
+const Heading = styled.div`
+  display: flex;
+  align-items: center;
+  h1 {
+    margin: 0;
+  }
+  button {
+    align-self: normal;
+    margin-left: 1rem;
+  }
+`;
+
+const Main = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+`;
+
+const Info = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-left: 2rem;
+`;
+
+const StatsTable = styled.table`
+  background-color: coral;
+  margin-top: 1rem;
+  width: 50%;
 `;
 
 // Не успел застилизировать :(
@@ -11,12 +44,19 @@ const HeroDetails = props => {
   const { goBack } = props.history;
   return (
     <Details>
-      <h1>Hero Stats</h1>
-      <button onClick={goBack}>Back</button>
-      <p>Name: {details.localized_name}</p>
-      <p>Attack Type: {details.attack_type}</p>
-      <p>Roles: {details.roles.join(', ')}</p>
-      <table>
+      <Heading>
+        <h1>Hero Stats</h1>
+        <button onClick={goBack}>Back</button>
+      </Heading>
+      <Main>
+        <img src={baseURL + details.img} alt={details.localized_name} />
+        <Info>
+          <p>Name: {details.localized_name}</p>
+          <p>Attack Type: {details.attack_type}</p>
+          <p>Roles: {details.roles.join(', ')}</p>
+        </Info>
+      </Main>
+      <StatsTable>
         <thead>
           <tr>
             <th>Stats</th>
@@ -59,7 +99,7 @@ const HeroDetails = props => {
             <td>{details.move_speed}</td>
           </tr>
         </tbody>
-      </table>
+      </StatsTable>
     </Details>
   );
 };
