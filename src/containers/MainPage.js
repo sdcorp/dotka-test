@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
-import Search from '../components/Search';
 import { filterByAttr, searchHeroByName } from '../service/utils';
-import { getHeroStats } from '../service/api';
+import Search from '../components/Search';
 import Heroes from '../components/Heroes';
 import LoadIndicator from '../components/LoadIndicator';
+import { fetchAllHeroes } from '../actions/heroesActions';
 
 const ATTRIBUTES = ['strength', 'intelligence', 'agility'];
 
@@ -32,25 +34,23 @@ const HeroesWrapper = styled.div`
 
 class MainPage extends Component {
   state = {
-    heroes: [],
-    searchedHeroId: null,
-    loading: false
+    searchedHeroId: null
   };
 
-  async componentDidMount() {
-    this.setState({ loading: true });
-    const heroesData = await getHeroStats();
-    this.setState({ heroes: heroesData, loading: false });
+  componentDidMount() {
+    const { fetchAllHeroes, heroesData } = this.props;
+    if (heroesData.heroes.length === 0) fetchAllHeroes();
   }
 
   searchHero = term => {
-    const { heroes } = this.state;
+    const { heroes } = this.props.heroesData;
     const searchedHeroId = searchHeroByName(heroes, term);
     if (!searchedHeroId) this.setState({ searchedHeroId: null });
     this.setState({ searchedHeroId });
   };
 
   renderHeroes = (heroes, attrs, searchId) => {
+    const { loading } = this.props.heroesData;
     return attrs.map(attr => (
       <HeroesWrapper key={attr}>
         <h3>{attr.toUpperCase()}</h3>
@@ -64,7 +64,8 @@ class MainPage extends Component {
   };
 
   render() {
-    const { heroes, searchedHeroId } = this.state;
+    const { heroes } = this.props.heroesData;
+    const { searchedHeroId } = this.state;
     return (
       <Page>
         <Search searchHero={this.searchHero} />
@@ -74,4 +75,13 @@ class MainPage extends Component {
   }
 }
 
-export default MainPage;
+const mapStateToProps = state => ({
+  heroesData: state.heroes
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({ fetchAllHeroes }, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MainPage);
