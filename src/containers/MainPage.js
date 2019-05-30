@@ -54,7 +54,7 @@ class MainPage extends Component {
     return attrs.map(attr => (
       <HeroesWrapper key={attr}>
         <h3>{attr.toUpperCase()}</h3>
-        {this.state.loading ? (
+        {loading ? (
           <LoadIndicator color="aquamarine" />
         ) : (
           <Heroes heroes={filterByAttr(heroes, attr.substring(0, 3))} searchedHeroId={searchId} />
