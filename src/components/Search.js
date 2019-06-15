@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { findHero, resetSearch } from '../actions/heroesActions';
 
 const SearchBox = styled.div`
   display: grid;
@@ -9,13 +12,13 @@ const SearchBox = styled.div`
   h2 {
     margin: 0;
   }
+  @media (max-width: 500px) {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
 `;
 
-// Пришлось делать Lifting State Up. Ну или лепить поиск прямо в Main Page (но мы же за компонентный подход)
-// Решил показать что я умею это...
-// Редакс бы решил эту проблему. Но его внедрять было слишком долго
-
-const Search = ({ searchHero }) => {
+const Search = ({ findHero, resetSearch }) => {
   const [inputValue, setInputValue] = useState('');
   return (
     <SearchBox>
@@ -26,11 +29,11 @@ const Search = ({ searchHero }) => {
         value={inputValue}
         placeholder="Enter a hero name"
       />
-      <button onClick={() => searchHero(inputValue)}>Find</button>
+      <button onClick={() => findHero(inputValue)}>Find</button>
       <button
         onClick={() => {
-          searchHero('');
           setInputValue('');
+          resetSearch();
         }}
       >
         Reset
@@ -39,4 +42,13 @@ const Search = ({ searchHero }) => {
   );
 };
 
-export default Search;
+const mapStateToProps = state => ({
+  hero: state.heroes.heroId
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({ findHero, resetSearch }, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Search);
