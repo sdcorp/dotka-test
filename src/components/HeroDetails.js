@@ -3,42 +3,6 @@ import styled from 'styled-components';
 
 const baseURL = 'https://api.opendota.com';
 
-const Details = styled.div`
-  background-color: azure;
-  padding: 1rem;
-`;
-
-const Heading = styled.div`
-  display: flex;
-  align-items: center;
-  h1 {
-    margin: 0;
-  }
-  button {
-    align-self: normal;
-    margin-left: 1rem;
-  }
-`;
-
-const Main = styled.div`
-  display: flex;
-  align-items: center;
-  margin-top: 1rem;
-`;
-
-const Info = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-left: 2rem;
-`;
-
-const StatsTable = styled.table`
-  background-color: coral;
-  margin-top: 1rem;
-  width: 50%;
-`;
-
-// Не успел застилизировать :(
 const HeroDetails = props => {
   const { details } = props.location.state;
   const { goBack } = props.history;
@@ -103,5 +67,43 @@ const HeroDetails = props => {
     </Details>
   );
 };
+
+const Details = styled.div`
+  background-color: azure;
+  padding: 1rem;
+`;
+
+const Heading = styled.div`
+  display: flex;
+  align-items: center;
+  h1 {
+    margin: 0;
+  }
+  button {
+    align-self: normal;
+    margin-left: 1rem;
+  }
+`;
+
+const Main = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  img {
+    margin-right: 2rem;
+  }
+`;
+
+const Info = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const StatsTable = styled.table`
+  background-color: coral;
+  margin-top: 1rem;
+  width: 100%;
+`;
 
 export default HeroDetails;
