@@ -2,17 +2,12 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const SearchBox = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 3fr 2fr 2fr;
+  grid-gap: 1rem;
+  padding: 0 1rem;
   h2 {
     margin: 0;
-  }
-  input {
-    margin: 0 1rem;
-  }
-  button {
-    margin-right: 1rem;
   }
 `;
 
@@ -26,7 +21,7 @@ const Search = ({ searchHero }) => {
     <SearchBox>
       <h2>Search</h2>
       <input
-        type="text"
+        type="search"
         onChange={e => setInputValue(e.target.value)}
         value={inputValue}
         placeholder="Enter a hero name"

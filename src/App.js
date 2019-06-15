@@ -27,7 +27,7 @@ const App = () => (
       <Link to="/">
         <img src={logo} alt="Dota" />
       </Link>
-      <span>Drink Vodka, Play Dotka!</span>
+      <span>Heroes of Dota2</span>
     </Logo>
 
     <Suspense fallback={<LoadIndicator size="100px" color="crimson" />}>

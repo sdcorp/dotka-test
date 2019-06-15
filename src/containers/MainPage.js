@@ -16,10 +16,10 @@ const Page = styled.div`
 
 const Container = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  /* grid-template-columns: repeat(2, 1fr); */
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   grid-gap: 2rem;
   margin-top: 2rem;
-  padding: 0 2rem;
 `;
 
 const HeroesWrapper = styled.div`
