@@ -15,7 +15,7 @@ const App = () => (
         <img src={logo} alt="Dota" />
       </Link>
       <span>Heroes of Dota 2 </span>
-      <span>Version: {pkg?.version}</span>
+      <span>Version: {pkg && pkg.version}</span>
     </Logo>
 
     <Suspense fallback={<LoadIndicator size="100px" color="crimson" />}>
